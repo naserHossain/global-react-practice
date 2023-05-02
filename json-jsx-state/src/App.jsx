@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * TODO: Handle user input fields => Done
  * TODO: Handle operations => Done
@@ -7,6 +8,9 @@
  */
 
 import { useState } from "react";
+import NumberField from "./components/ui/NumberField";
+import Button from "./components/ui/Button";
+import InputSection from "./components/inputs/InputSection";
 
 const initialInputState = {
     a: 0,
@@ -78,33 +82,22 @@ const App = () => {
     // restore operation
     const handleRestoreBtn = (historyItem) => {
         setInputState({ ...historyItem.inputs });
-        setRestoredHistory(historyItem);
+        setRestoredHistory(historyItem.id);
     };
 
     return (
         <div style={{ width: "50%", margin: "0 auto" }}>
             <h1> Result: {result} </h1>
-            <div>
-                <p>Inputs</p>
-                <br />
-                <input
-                    type="number"
-                    value={inputState.a}
-                    onChange={handleInputChange}
-                    name="a"
-                />
-                <input
-                    type="number"
-                    value={inputState.b}
-                    onChange={handleInputChange}
-                    name="b"
-                />
-            </div>
+            <InputSection
+                inputs={inputState}
+                handleInputChange={handleInputChange}
+            />
             <div>
                 <br />
                 <p>Operations</p>
                 <br />
-                <button onClick={() => handleArithmeticOps("+")}>add</button>
+                <Button text="subs" onClick={() => handleArithmeticOps("+")} />
+                {/* <button onClick={}>add</button> */}
                 <button onClick={() => handleArithmeticOps("-")}>subs</button>
                 <button onClick={() => handleArithmeticOps("*")}>multi</button>
                 <button onClick={() => handleArithmeticOps("/")}>div</button>
@@ -138,7 +131,7 @@ const App = () => {
                                     }
                                     disabled={
                                         restoredHistory !== null &&
-                                        restoredHistory.id === historyItem.id
+                                        restoredHistory === historyItem.id
                                     }
                                 >
                                     restore
